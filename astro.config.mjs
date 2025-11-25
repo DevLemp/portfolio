@@ -1,7 +1,9 @@
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
     adapter: vercel(),
-    site: 'https://portfolio-9pvnkyw7p-christodoulos-lemperos-projects.vercel.app/', // optional, but good for SEO
+    integrations: [tailwind()],
+    site: 'https://your-vercel-domain.vercel.app',
 });
