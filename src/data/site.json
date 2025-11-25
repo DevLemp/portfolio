@@ -1,0 +1,15 @@
+{
+  "name": "Christodoulos Lemperos",
+  "title": "AI Automation Engineer",
+  "location": "Dubai, UAE",
+  "email": "lemperosc@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/christodoulos-lemperos-22428416b/",
+  "github": "https://github.com/DevLemp",
+  "whatsapp": "https://wa.me/971508137109",
+  "hero": {
+    "headline": "AI Automation Engineer based in Dubai",
+    "subtitle": "I build practical automations that remove manual work for busy teams — without overengineering.",
+    "ctaLabel": "Automate a Task",
+    "ctaUrl": "/contact"
+  }
+}
