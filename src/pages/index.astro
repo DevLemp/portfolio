@@ -1,8 +1,9 @@
 ---
-import ProjectCard from "../components/ProjectCard.astro";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import ProjectCard from "../components/ProjectCard.astro";
+import site from "../data/site.json";
 
 // Load all project Markdown files
 const projectsDir = path.resolve('./src/content/projects');
@@ -12,27 +13,45 @@ const projects = filenames.map((name) => {
   const { data, content } = matter(file);
   return { ...data, description: content };
 });
-
-// Load site config
-import site from "../data/site.json";
 ---
 
 <html lang="en">
   <head>
     <title>{site.name} - {site.title}</title>
   </head>
-  <body>
-    <header>
-      <h1>{site.hero.headline}</h1>
-      <p>{site.hero.subtitle}</p>
-      <a href={site.hero.ctaUrl}>{site.hero.ctaLabel}</a>
+  <body class="p-6 max-w-4xl mx-auto">
+    <!-- Hero Section -->
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl font-bold mb-4">{site.hero.headline}</h1>
+      <p class="text-lg mb-6">{site.hero.subtitle}</p>
+      <a href={site.hero.ctaUrl} class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">{site.hero.ctaLabel}</a>
     </header>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="grid gap-4">
+    <!-- Projects Section -->
+    <section id="projects" class="mb-12">
+      <h2 class="text-3xl font-bold mb-6">Projects</h2>
+      <div class="grid gap-6 md:grid-cols-2">
         {projects.map(project => <ProjectCard project={project} />)}
       </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="mb-12">
+      <h2 class="text-3xl font-bold mb-4">About Me</h2>
+      <div class="prose">
+        {/** Load About content dynamically **/}
+        <ContentMarkdown src="../content/about.md" />
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="mb-12">
+      <h2 class="text-3xl font-bold mb-4">Contact</h2>
+      <ul class="list-disc list-inside">
+        <li>Email: <a href={"mailto:" + site.email} class="text-blue-600 hover:underline">{site.email}</a></li>
+        <li>GitHub: <a href={site.github} class="text-blue-600 hover:underline">{site.github}</a></li>
+        <li>LinkedIn: <a href={site.linkedin} class="text-blue-600 hover:underline">{site.linkedin}</a></li>
+      </ul>
     </section>
   </body>
 </html>

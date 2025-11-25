@@ -1,0 +1,11 @@
+---
+import fs from "fs";
+import matter from "gray-matter";
+import { marked } from "marked";
+
+const { src } = Astro.props;
+const file = fs.readFileSync(src, "utf-8");
+const { content } = matter(file);
+---
+
+<div innerHTML={marked(content)}></div>
