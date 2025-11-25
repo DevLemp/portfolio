@@ -2,11 +2,11 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import Hero from "../components/Hero.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import ContentMarkdown from "../components/ContentMarkdown.astro";
-import site from "../data/site.json";
 
-// Load projects dynamically
+// Load all projects from content/projects
 const projectsDir = path.resolve('./src/content/projects');
 const filenames = fs.readdirSync(projectsDir);
 const projects = filenames.map(name => {
@@ -20,29 +20,32 @@ const projects = filenames.map(name => {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{site.name} - {site.title}</title>
+    <title>Christodoulos Lemperos – Software Engineer</title>
     <link rel="stylesheet" href="/src/styles/global.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .animate-fadeIn { animation: fadeIn 0.6s forwards; }
+    </style>
   </head>
   <body class="bg-gray-50 text-gray-800 font-sans" style="font-family: 'Inter', sans-serif;">
 
     <!-- Hero Section -->
-    <header class="bg-gradient-to-r from-blue-600 to-blue-400 text-white py-28">
-      <div class="container mx-auto text-center px-6">
-        <h1 class="text-5xl md:text-6xl font-bold mb-4">{site.hero.headline}</h1>
-        <p class="text-lg md:text-2xl mb-8">{site.hero.subtitle}</p>
-        <a href={site.hero.ctaUrl} class="inline-block px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg shadow hover:shadow-lg transition">
-          {site.hero.ctaLabel}
-        </a>
-      </div>
-    </header>
+    <Hero
+      headline="AI Automation Engineer"
+      subtitle="I build practical automation tools and projects to save time and improve workflows."
+      ctaLabel="Get in Touch"
+      ctaUrl="#contact"
+    >
+      <!-- Optional blobs -->
+      <div class="absolute top-0 -left-20 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 -right-24 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl"></div>
+    </Hero>
 
     <main class="container mx-auto px-6 py-20">
 
       <!-- Projects Section -->
-      <section id="projects" class="mb-20">
+      <section id="projects" class="mb-20 opacity-0 animate-fadeIn">
         <h2 class="text-4xl font-bold mb-12 text-center">Projects</h2>
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map(project => <ProjectCard project={project} />)}
@@ -50,13 +53,13 @@ const projects = filenames.map(name => {
       </section>
 
       <!-- About Section -->
-      <section id="about" class="mb-20">
+      <section id="about" class="mb-20 opacity-0 animate-fadeIn">
         <h2 class="text-4xl font-bold mb-8 text-center">About Me</h2>
         <div class="prose max-w-3xl mx-auto text-center">
           <ContentMarkdown src="./src/content/about.md" />
         </div>
 
-        <!-- Optional Learning Timeline -->
+        <!-- Learning Timeline -->
         <div class="mt-12 max-w-3xl mx-auto">
           <h3 class="text-2xl font-semibold mb-4 text-center">Learning Journey</h3>
           <ul class="border-l-2 border-blue-600 pl-6">
@@ -77,15 +80,27 @@ const projects = filenames.map(name => {
       </section>
 
       <!-- Contact Section -->
-      <section id="contact" class="mb-20">
+      <section id="contact" class="mb-20 opacity-0 animate-fadeIn">
         <h2 class="text-4xl font-bold mb-8 text-center">Contact</h2>
         <div class="flex flex-col md:flex-row justify-center gap-6 text-center">
-          <a href={"mailto:" + site.email} class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">Email</a>
-          <a href={site.github} target="_blank" class="px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition">GitHub</a>
-          <a href={site.linkedin} target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition">LinkedIn</a>
+          <a href="mailto:lemperosc@gmail.com" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">Email</a>
+          <a href="https://github.com/DevLemp" target="_blank" class="px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-900 transition transform hover:scale-105">GitHub</a>
+          <a href="https://www.linkedin.com/in/christodoulos-lemperos-22428416b/" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105">LinkedIn</a>
         </div>
       </section>
+
     </main>
+
+    <script>
+      // Section reveal on scroll
+      const sections = document.querySelectorAll("section");
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) entry.target.classList.add("animate-fadeIn");
+        });
+      }, { threshold: 0.2 });
+      sections.forEach(sec => observer.observe(sec));
+    </script>
 
   </body>
 </html>
