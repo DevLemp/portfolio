@@ -2,7 +2,7 @@
 title: "Contact"
 ---
 
-I’m open to collaborations, automation projects, or sharing ideas. Reach out:
+I'm open to collaborations, automation projects, or sharing ideas. Reach out:
 
 - **Email:** lemperosc@gmail.com
 - **GitHub:** [github.com/DevLemp](https://github.com/DevLemp)
